@@ -4,8 +4,18 @@ def validate_bank(parts, exam_type):
     exam_type: 'UNIT', 'CAT', 'ENDSEM'
     """
 
+    if exam_type == "UNIT":
+        # Adaptive validation for UNIT
+        if len(parts.get("A", [])) < 2:
+            raise ValueError("Too few Part A questions to generate UNIT exam.")
+        if len(parts.get("B", [])) < 1:
+            raise ValueError("Too few Part B questions to generate UNIT exam.")
+        if len(parts.get("C", [])) < 1:
+            raise ValueError("Too few Part C questions to generate UNIT exam.")
+        return True
+
+    # Strict validation for CAT and ENDSEM
     req = {
-        "UNIT":  {"A": 10, "B": 2,  "C": 2},
         "CAT":   {"A": 10, "B": 8,  "C": 4},
         "ENDSEM":{"A": 20, "B": 20, "C": 4},
     }

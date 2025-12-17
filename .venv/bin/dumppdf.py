@@ -1,4 +1,4 @@
-#!/Users/saidakshin/Desktop/genqp/.venv/bin/python3
+#!/Users/saidakshin/Desktop/genqp/.venv/bin/python
 """Extract pdf structure in XML format"""
 
 import logging

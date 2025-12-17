@@ -12,27 +12,34 @@ def reindex(part_list, prefix):
 
 import random
 
-def generate_unit_test(parts):
-    A = reindex(parts["A"], "A")
-    B = reindex(parts["B"], "B")
-    C = reindex(parts["C"], "C")
+def generate_unit_paper(pdf_path, unit_number):
+    """
+    Generates UNIT exam paper for ONE selected unit.
+    """
+    parts = classify_questions_from_pdf(pdf_path)
 
-    a_qs = random.sample(A, 10)
-    b_qs = random.sample(B, 2)
-    c_qs = random.sample(C, 2)
+    # parts is already UNIT-specific internally
+    # (we will scope to unit in next step)
+
+    partA = parts["A"]
+    partB = parts["B"]
+    partC = parts["C"]
+
+    if len(partA) < 5:
+        raise ValueError("Not enough Part A questions in this UNIT")
+    if len(partB) < 1:
+        raise ValueError("Not enough Part B questions in this UNIT")
+    if len(partC) < 2:
+        raise ValueError("Not enough Part C questions in this UNIT")
 
     return {
-        "QPA": {
-            "A": a_qs[:5],
-            "B": [b_qs[0]],
-            "C": [c_qs[0]],
-        },
-        "QPB": {
-            "A": a_qs[5:],
-            "B": [b_qs[1]],
-            "C": [c_qs[1]],
+        "PartA": partA[:5],
+        "PartB": partB[:1],
+        "PartC": {
+            "choice": partC[:2]
         }
     }
+
 def generate_cat(parts):
     A = reindex(parts["A"], "A")
     B = reindex(parts["B"], "B")
